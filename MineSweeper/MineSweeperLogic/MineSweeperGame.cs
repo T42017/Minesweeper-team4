@@ -9,35 +9,44 @@ namespace MineSweeperLogic
 {
     public class MineSweeperGame
     {
-
+        private PositionInfo[,] gameBoard;
         public MineSweeperGame(int sizeX, int sizeY, int nrOfMines, IServiceBus bus)
         {
             SizeX = sizeX;
             SizeY = sizeY;
             NumberOfMines = nrOfMines;
             ResetBoard();
+            gameBoard = new PositionInfo[sizeX, sizeY];
         }
-
+        
         public int PosX { get; private set; }
         public int PosY { get; private set; }
         public int SizeX { get; }
         public int SizeY { get; }
         public int NumberOfMines { get; }
         public GameState State { get; private set; }
+        
 
         public PositionInfo GetCoordinate(int x, int y)
         {
             
-            if (x == 0)
+            if (x >= SizeX)
             {
                 throw new System.IndexOutOfRangeException();
             }
-            if (y == 0)
+            if (y >= SizeY)
             {
                 throw new System.IndexOutOfRangeException();
             }
-            PositionInfo position = new PositionInfo();
-            return position;
+            if (x < 0)
+            {
+                throw new System.IndexOutOfRangeException();
+            }
+            if (y < 0)
+            {
+                throw new System.IndexOutOfRangeException();
+            }
+            return gameBoard[x, y];
         }
 
         public void FlagCoordinate()
