@@ -17,13 +17,6 @@ namespace MineSweeperLogic
             NumberOfMines = nrOfMines;
             ResetBoard();
             gameBoard = new PositionInfo[sizeX, sizeY];
-            for (int i = 0; i < sizeX; i++)
-            {
-                for (int j = 0; j < sizeY; j++)
-                {
-                    gameBoard[i, j] = new PositionInfo(i, j, false);
-                }
-            }
         }
         
         public int PosX { get; private set; }
@@ -66,16 +59,7 @@ namespace MineSweeperLogic
 
         public void ResetBoard()
         {
-
-            for (int i = 0; i < SizeX; i++)
-            {
-                for (int j = 0; j < SizeY; j++)
-                {
-                    gameBoard[i, j] = new PositionInfo(i, j, false);
-                }
-            }
-
-            State = GameState.Playing;
+            
         }
 
         public void DrawBoard()
