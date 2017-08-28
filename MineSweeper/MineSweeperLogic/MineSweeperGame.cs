@@ -24,7 +24,11 @@ namespace MineSweeperLogic
         public PositionInfo GetCoordinate(int x, int y)
         {
             
-            if (x > SizeX)
+            if (x == 0)
+            {
+                throw new System.IndexOutOfRangeException();
+            }
+            if (y == 0)
             {
                 throw new System.IndexOutOfRangeException();
             }
