@@ -68,6 +68,7 @@ namespace MineSweeperLogic
 
         public void ResetBoard()
         {
+            
 
             for (int i = 0; i < SizeX; i++)
             {
