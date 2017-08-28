@@ -15,15 +15,17 @@ namespace MineSweeperLogic
             SizeX = sizeX;
             SizeY = sizeY;
             NumberOfMines = nrOfMines;
-            ResetBoard();
+            
             gameBoard = new PositionInfo[sizeX, sizeY];
-            for (int i = 0; i < sizeX; i++)
+            for (int i = 0; i < SizeY; i++)
             {
-                for (int j = 0; j < sizeY; j++)
+                for (int j = 0; j < SizeX; j++)
                 {
                     gameBoard[i, j] = new PositionInfo(i, j, false);
                 }
             }
+
+            ResetBoard();
         }
         
         public int PosX { get; private set; }
