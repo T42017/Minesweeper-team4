@@ -23,7 +23,13 @@ namespace MineSweeperLogic
 
         public PositionInfo GetCoordinate(int x, int y)
         {
-            return null;
+            
+            if (x > SizeX)
+            {
+                throw new System.IndexOutOfRangeException();
+            }
+            PositionInfo position = new PositionInfo();
+            return position;
         }
 
         public void FlagCoordinate()
@@ -36,6 +42,7 @@ namespace MineSweeperLogic
 
         public void ResetBoard()
         {
+            
         }
 
         public void DrawBoard()
