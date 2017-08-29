@@ -73,6 +73,7 @@ namespace MineSweeperLogic
 
         public void FlagCoordinate()
         {
+            
         }
 
         public void FloodReveal(PositionInfo[,] arrayToBeFilled, int startPointX, int startPointY)
@@ -90,7 +91,7 @@ namespace MineSweeperLogic
                     if (arrayToBeFilled[a.X, a.Y].NrOfNeighbours == 0 && arrayToBeFilled[a.X, a.Y].IsOpen == false)
                     {
                         arrayToBeFilled[a.X, a.Y].IsOpen = true;
-
+                        if (a.X > 0)
                         if(a.X > 0)
                             points.Push(arrayToBeFilled[a.X - 1, a.Y]);
                         if (a.Y > 0)
@@ -198,16 +199,37 @@ namespace MineSweeperLogic
                     {
                         if (gameBoard[k, i].IsOpen)
                         {
-                            _bus.Write("* ");
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("2 ", ConsoleColor.DarkCyan);
+                            }
+                            else
+                            {
+                                _bus.Write(". ");
+                            }
+                               
                         }
-
-                        if (i == PosY && k == PosX)
+                        else if (gameBoard[k, i].IsFlagged)
                         {
-                            _bus.Write("? ", ConsoleColor.DarkCyan); 
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("! ", ConsoleColor.DarkCyan);
+                            }
+                            else{
+                                _bus.Write("! ");
+                            }
                         }
+                        
                         else
                         {
-                            _bus.Write("? ");
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("? ", ConsoleColor.DarkCyan);
+                            }
+                            else
+                            {
+                                _bus.Write("? ");
+                            }
                         }
                         
                     }
