@@ -21,5 +21,6 @@ namespace MineSweeperLogic
         public bool HasMine { get; set; }
         public bool IsFlagged { get; set; }
         public int NrOfNeighbours { get; set; }
+        public bool IsRevealed { get; set; }
     }
 }
