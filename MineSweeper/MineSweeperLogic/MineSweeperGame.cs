@@ -112,6 +112,11 @@ namespace MineSweeperLogic
                 {
                     for (int k = 0; k < SizeX; k++)
                     {
+                        if (gameBoard[k, i].isRevealed)
+                        {
+                            _bus.Write("* ");
+                        }
+
                         if (i == PosY && k == PosX)
                         {
                             _bus.Write("? ", ConsoleColor.DarkCyan); 
