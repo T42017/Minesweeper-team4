@@ -97,7 +97,7 @@ namespace MineSweeperLogic
 
                 if (a.X < arrayToBeFilled.Length && a.X >= 0 && a.Y < arrayToBeFilled.Length && a.Y >= 0)
                 {
-                    if (arrayToBeFilled[a.X, a.Y].NrOfNeighbours == 0 && !arrayToBeFilled[a.X, a.Y].IsOpen && !arrayToBeFilled[a.X, a.Y].HasMine)
+                    if (arrayToBeFilled[a.X, a.Y].NrOfNeighbours == 0 && !arrayToBeFilled[a.X, a.Y].IsOpen && !arrayToBeFilled[a.X, a.Y].HasMine && !arrayToBeFilled[a.X, a.Y].IsFlagged)
                     {
                         arrayToBeFilled[a.X, a.Y].IsOpen = true;                        
                         if(a.X > 0)
@@ -110,7 +110,7 @@ namespace MineSweeperLogic
                             points.Push(arrayToBeFilled[a.X, a.Y + 1]);
                     }
 
-                    else if(arrayToBeFilled[a.X, a.Y].IsOpen == false && !arrayToBeFilled[a.X, a.Y].HasMine)
+                    else if(arrayToBeFilled[a.X, a.Y].IsOpen == false && !arrayToBeFilled[a.X, a.Y].HasMine && !arrayToBeFilled[a.X, a.Y].IsFlagged)
                     {
                         arrayToBeFilled[a.X, a.Y].IsOpen = true;
                     }

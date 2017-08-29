@@ -9,7 +9,7 @@ namespace MineSweeper
 {
     class Program
     {
-        static MineSweeperGame game = new MineSweeperGame(30, 30, 100, new ServiceBus());
+        static MineSweeperGame game = new MineSweeperGame(30, 20, 10, new ServiceBus());
         
         static void Main(string[] args)
         {
