@@ -95,16 +95,19 @@ namespace MineSweeperLogic
             {
                 PositionInfo a = points.Pop();
 
-                if (a.X < arrayToBeFilled.Length && a.X > 0 && a.Y < arrayToBeFilled.Length && a.Y > 0)
+                if (a.X < arrayToBeFilled.Length && a.X >= 0 && a.Y < arrayToBeFilled.Length && a.Y >= 0)
                 {
-                    if (!arrayToBeFilled[a.X, a.Y].IsRevealed)
+                    if (!arrayToBeFilled[a.X, a.Y].IsOpen)
                     {
-                        arrayToBeFilled[a.X, a.Y].IsRevealed = true;
-
-                        points.Push(arrayToBeFilled[a.X - 1, a.Y]);
-                        points.Push(arrayToBeFilled[a.X, a.Y - 1]);
-                        points.Push(arrayToBeFilled[a.X + 1, a.Y]);
-                        points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+                        arrayToBeFilled[a.X, a.Y].IsOpen = true;
+                        if (a.X > 0)
+                            points.Push(arrayToBeFilled[a.X - 1, a.Y]);
+                        if (a.Y > 0)
+                            points.Push(arrayToBeFilled[a.X, a.Y - 1]);
+                        if (a.X < SizeX -1)
+                            points.Push(arrayToBeFilled[a.X + 1, a.Y]);
+                        if (a.Y < SizeY -1)
+                            points.Push(arrayToBeFilled[a.X, a.Y + 1]);
                     }
                 }
             }
@@ -139,18 +142,39 @@ namespace MineSweeperLogic
                 {
                     for (int k = 0; k < SizeX; k++)
                     {
-                        if (gameBoard[k, i].IsRevealed)
+                        if (gameBoard[k, i].IsOpen)
                         {
-                            _bus.Write("* ");
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("2 ", ConsoleColor.DarkCyan);
+                            }
+                            else
+                            {
+                                _bus.Write(". ");
+                            }
+                               
                         }
-
-                        if (i == PosY && k == PosX)
+                        else if (gameBoard[k, i].IsFlagged)
                         {
-                            _bus.Write("? ", ConsoleColor.DarkCyan); 
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("! ", ConsoleColor.DarkCyan);
+                            }
+                            else{
+                                _bus.Write("! ");
+                            }
                         }
+                        
                         else
                         {
-                            _bus.Write("? ");
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("? ", ConsoleColor.DarkCyan);
+                            }
+                            else
+                            {
+                                _bus.Write("? ");
+                            }
                         }
                         
                     }
@@ -158,9 +182,6 @@ namespace MineSweeperLogic
                 }
                 isStarting = false;
             }
-            
-            
-
         }
 
         #region MoveCursor Methods
