@@ -28,6 +28,7 @@ namespace MineSweeperLogic
             }
             PlaceMines(NumberOfMines, SizeX, SizeY, _bus);
 
+            Console.SetCursorPosition(PosX,PosY);
             ResetBoard();
         }
         public int PosX { get; private set; }
@@ -89,7 +90,7 @@ namespace MineSweeperLogic
         public void ResetBoard()
         {
 
-            State = GameState.Playing;
+            
             for (int i = 0; i < SizeX; i++)
             {
                 for (int j = 0; j < SizeY; j++)
@@ -100,7 +101,6 @@ namespace MineSweeperLogic
 
             PlaceMines(NumberOfMines, SizeX, SizeY, _bus);
 
-            
         }
 
         public void DrawBoard()
@@ -135,21 +135,38 @@ namespace MineSweeperLogic
 
         public void MoveCursorUp()
         {
+            if (PosY != 0)
+            {
+                Console.SetCursorPosition(PosX, PosY - 1);
+            }
             DrawBoard();
         }
 
         public void MoveCursorDown()
         {
+            if (PosY != SizeY - 1)
+            {
+                Console.SetCursorPosition(PosX, PosY + 1);
+            }
             DrawBoard();
         }
 
         public void MoveCursorLeft()
         {
+            if (PosX != 0)
+            {
+                Console.SetCursorPosition(PosX - 1, PosY);
+            }
             DrawBoard();
         }
 
         public void MoveCursorRight()
         {
+            if (PosX != SizeX - 1)
+            {
+                Console.SetCursorPosition(PosX + 1, PosY);
+            }
+            
             DrawBoard();
         }
 
