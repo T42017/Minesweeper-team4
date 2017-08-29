@@ -10,6 +10,7 @@ namespace MineSweeperLogic
 {
     public class MineSweeperGame
     {
+        public ConsoleColor[] NumColors = new ConsoleColor[8];
         private PositionInfo[,] gameBoard;
 
         public MineSweeperGame(int sizeX, int sizeY, int nrOfMines, IServiceBus bus)
@@ -23,7 +24,14 @@ namespace MineSweeperLogic
             gameBoard = new PositionInfo[sizeX, sizeY];
             ResetBoard();
             Console.SetCursorPosition(PosX,PosY);
-            
+            NumColors[0] = ConsoleColor.Cyan;
+            NumColors[1] = ConsoleColor.Blue;
+            NumColors[2] = ConsoleColor.Magenta;
+            NumColors[3] = ConsoleColor.Yellow;
+            NumColors[4] = ConsoleColor.Red;
+            NumColors[5] = ConsoleColor.Green;
+            NumColors[6] = ConsoleColor.Yellow;
+            NumColors[7] = ConsoleColor.Red;
         }
         public int PosX { get; private set; }
         public int PosY { get; private set; }
@@ -285,6 +293,7 @@ namespace MineSweeperLogic
 
         public void DrawBoard()
         {
+ 
             isStarting = true;
             while (isStarting)
             {
@@ -292,54 +301,51 @@ namespace MineSweeperLogic
                 {
                     for (int k = 0; k < SizeX; k++)
                     {
+                        ConsoleColor bgColour = ConsoleColor.Black;
 
-                        if (gameBoard[k, i].IsOpen && !gameBoard[k, i].HasMine)
+                        if (gameBoard[k, i].IsOpen)
                         {
-                            if ((i == PosY && k == PosX) && gameBoard[k, i].NrOfNeighbours == 0)
+                            
+                            if (i == PosY && k == PosX)
                             {
-                                _bus.Write(". ", ConsoleColor.DarkCyan);
+                               bgColour = ConsoleColor.DarkCyan;
                             }
+
+                            if (gameBoard[k, i].HasMine)
+                            {
+                                _bus.Write("X ", bgColour, ConsoleColor.DarkRed);
+                            }
+
                             else if (gameBoard[k, i].NrOfNeighbours > 0)
                             {
-                                _bus.Write(gameBoard[k, i].NrOfNeighbours + " ");
-                            }
-                            else
-                            {
-                                _bus.Write(". ");
+                                _bus.Write(gameBoard[k, i].NrOfNeighbours + " ", bgColour, NumColors[gameBoard[k, i].NrOfNeighbours -1]);
                             }
 
-                        }
-                        else if (gameBoard[k, i].IsFlagged)
-                        {
-                            if (i == PosY && k == PosX)
-                            {
-                                _bus.Write("! ", ConsoleColor.DarkCyan);
-                            }
-                            else {
-                                _bus.Write("! ");
-                            }
-                        }
-                        else if (gameBoard[k, i].IsOpen && gameBoard[k, i].HasMine)
-                        {
-                            if (i == PosY && k == PosX)
-                            {
-                                _bus.Write("X ", ConsoleColor.DarkCyan);
-                            }
                             else
                             {
-                                _bus.Write("X ");
+                                _bus.Write(". ", bgColour, ConsoleColor.White);
                             }
+
+                            
                         }
+
                         else
                         {
+                            
+
                             if (i == PosY && k == PosX)
                             {
-                                _bus.Write("? ", ConsoleColor.DarkCyan);
+                                bgColour = ConsoleColor.DarkCyan;
+                            }
+                            if (gameBoard[k, i].IsFlagged)
+                            {
+                                _bus.Write("! ", bgColour, ConsoleColor.DarkGray);
                             }
                             else
                             {
-                                _bus.Write("? ");
+                                _bus.Write("? ", bgColour, ConsoleColor.White);
                             }
+                            
                         }
                         
                     }

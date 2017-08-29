@@ -10,21 +10,37 @@ namespace MineSweeperLogic
     {
         readonly Random rnd = new Random();
 
+
+        public ServiceBus()
+        {
+
+        }
+
         public void Write(string text)
         {
             Console.Write(text);
+        }
+
+
+        public void Write(string text, ConsoleColor backgroundColor, ConsoleColor foregroundColor)
+        {
+            Console.BackgroundColor = backgroundColor;
+            Console.ForegroundColor = foregroundColor;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void Write(string text, ConsoleColor backgroundColor)
         {
             Console.BackgroundColor = backgroundColor;
             Console.Write(text);
-            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         public void WriteLine()
         {
             Console.WriteLine();
+            Console.BackgroundColor = ConsoleColor.Black;
+            
         }
 
         public int Next(int maxValue)
