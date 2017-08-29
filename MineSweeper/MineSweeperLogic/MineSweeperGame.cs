@@ -141,60 +141,83 @@ namespace MineSweeperLogic
             {
                 for (int j = 0; j < SizeY; j++)
                 {
-                    if (i <= 0 && j <= 0)
+                    if (i <= 0)
                     {
-                        if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-
-                        if (i <= 0 && j > 0)
+                        if (j <= 0)
                         {
+                            if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        }
+                        if (j > 0 && j < SizeY - 1)
+                        {
+                            if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
                             if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                             if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         }
-
-                        if (i > 0 && j <= 0)
-                        {
-                            if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                            if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        }
-                    }
-                    else if (i == SizeX - 1 && j == SizeY - 1)
-                    {
-                        if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-
-                        if (i == SizeX - 1 && j < SizeY - 1)
-                        {
-                            if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                            if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        }
-
-                        if (i < SizeX - 1 && j == SizeY - 1)
+                        else if (j >= SizeY - 1)
                         {
                             if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                             if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
-
                         }
                     }
-
-                    else if (i < SizeX - 1 && i > 0 && j < SizeY - 1 && j > 0)
+                    if (i > 0 && j == 0 && i < SizeX - 1)
                     {
-                        if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
-                        if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                    }
+                    if (i > 0 && j >= SizeY - 1 && i < SizeX - 1)
+                    {
+                        if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                    }
+                    if (i >= SizeX - 1)
+                    {
+                        if (j <= 0)
+                        {
+                            if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        }
+                        if (j > 0 && j < SizeY - 1)
+                        {
+                            if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        }
+                        else if (j >= SizeY - 1)
+                        {
+                            if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        }
                     }
 
+                    if(i > 0 && i < SizeX -1  && j > 0 && j < SizeY -1)
+                    {
+                        if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                    }
                 }
             }
-
-        }
+    }
 
         public void DrawBoard()
         {
@@ -210,7 +233,7 @@ namespace MineSweeperLogic
                         {
                             if (i == PosY && k == PosX)
                             {
-                                _bus.Write("2 ", ConsoleColor.DarkCyan);
+                                _bus.Write(". ", ConsoleColor.DarkCyan);
                             }
                             else if (gameBoard[k, i].NrOfNeighbours > 0)
                             {
