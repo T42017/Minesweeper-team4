@@ -75,9 +75,34 @@ namespace MineSweeperLogic
         {
         }
 
+        public void FloodReveal(PositionInfo[,] arrayToBeFilled, int startPointX, int startPointY)
+        {
+            Stack<PositionInfo> points = new Stack<PositionInfo>();
+            points.Push(arrayToBeFilled[startPointX, startPointY]);
+
+
+            while (points.Count > 0)
+            {
+                PositionInfo a = points.Pop();
+
+                if (a.X < arrayToBeFilled.Length && a.X > 0 && a.Y < arrayToBeFilled.Length && a.Y > 0)
+                {
+                    if (!arrayToBeFilled[a.X, a.Y].IsRevealed)
+                    {
+                        arrayToBeFilled[a.X, a.Y].IsRevealed = true;
+
+                        points.Push(arrayToBeFilled[a.X - 1, a.Y]);
+                        points.Push(arrayToBeFilled[a.X, a.Y - 1]);
+                        points.Push(arrayToBeFilled[a.X + 1, a.Y]);
+                        points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+                    }
+                }
+            }
+        }
+
         public void ClickCoordinate()
         {
-
+            FloodReveal(gameBoard, PosX, PosY);
         }
 
         public void ResetBoard()
