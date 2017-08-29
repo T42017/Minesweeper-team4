@@ -88,10 +88,9 @@ namespace MineSweeperLogic
 
                 if (a.X < arrayToBeFilled.Length && a.X >= 0 && a.Y < arrayToBeFilled.Length && a.Y >= 0)
                 {
-                    if (arrayToBeFilled[a.X, a.Y].NrOfNeighbours == 0 && arrayToBeFilled[a.X, a.Y].IsOpen == false)
+                    if (arrayToBeFilled[a.X, a.Y].NrOfNeighbours == 0 && !arrayToBeFilled[a.X, a.Y].IsOpen && !arrayToBeFilled[a.X, a.Y].HasMine)
                     {
-                        arrayToBeFilled[a.X, a.Y].IsOpen = true;
-                        if (a.X > 0)
+                        arrayToBeFilled[a.X, a.Y].IsOpen = true;                        
                         if(a.X > 0)
                             points.Push(arrayToBeFilled[a.X - 1, a.Y]);
                         if (a.Y > 0)
@@ -102,7 +101,7 @@ namespace MineSweeperLogic
                             points.Push(arrayToBeFilled[a.X, a.Y + 1]);
                     }
 
-                    else
+                    else if(arrayToBeFilled[a.X, a.Y].IsOpen == false && !arrayToBeFilled[a.X, a.Y].HasMine)
                     {
                         arrayToBeFilled[a.X, a.Y].IsOpen = true;
                     }
@@ -151,19 +150,19 @@ namespace MineSweeperLogic
                             if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         }
                     }
-                    else if (i == SizeX && j == SizeY)
+                    else if (i == SizeX - 1 && j == SizeY - 1)
                     {
                         if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
 
-                        if (i == SizeX && j < SizeY)
+                        if (i == SizeX - 1 && j < SizeY - 1)
                         {
                             if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                             if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         }
 
-                        if (i < SizeX && j == SizeY)
+                        if (i < SizeX - 1 && j == SizeY - 1)
                         {
                             if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
                             if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
@@ -171,7 +170,7 @@ namespace MineSweeperLogic
                         }
                     }
 
-                    else if (i < SizeX-1 && i > 0 && j < SizeY-1 && j > 0)
+                    else if (i < SizeX - 1 && i > 0 && j < SizeY - 1 && j > 0)
                     {
                         if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
                         if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
@@ -197,11 +196,16 @@ namespace MineSweeperLogic
                 {
                     for (int k = 0; k < SizeX; k++)
                     {
+
                         if (gameBoard[k, i].IsOpen)
                         {
                             if (i == PosY && k == PosX)
                             {
                                 _bus.Write("2 ", ConsoleColor.DarkCyan);
+                            }
+                            else if (gameBoard[k, i].NrOfNeighbours > 0)
+                            {
+                                _bus.Write(gameBoard[k, i].NrOfNeighbours + " ");
                             }
                             else
                             {
