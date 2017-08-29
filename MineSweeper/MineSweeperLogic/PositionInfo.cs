@@ -8,6 +8,13 @@ namespace MineSweeperLogic
 {
     public class PositionInfo
     {
+        public PositionInfo(int x, int y, bool hasMine)
+        {
+            X = x;
+            Y = y;
+            HasMine = hasMine;
+        }
+
         public int X { get; set; }
         public int Y { get; set; }
         public bool IsOpen { get; set; }
