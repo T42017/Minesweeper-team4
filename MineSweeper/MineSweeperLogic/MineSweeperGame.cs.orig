@@ -15,10 +15,12 @@ namespace MineSweeperLogic
             SizeX = sizeX;
             SizeY = sizeY;
             NumberOfMines = nrOfMines;
-            _bus = bus;
-            PosX = 2;
-            PosY = 3;
+            Bus = bus;
+            
             gameBoard = new PositionInfo[sizeX, sizeY];
+<<<<<<< HEAD
+            _bus = bus;
+=======
             for (int i = 0; i < SizeY; i++)
             {
                 for (int j = 0; j < SizeX; j++)
@@ -26,18 +28,19 @@ namespace MineSweeperLogic
                     gameBoard[i, j] = new PositionInfo(i, j, false);
                 }
             }
-            PlaceMines(NumberOfMines, SizeX, SizeY, _bus);
+            PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
 
             ResetBoard();
+>>>>>>> Drawboard-2D_array
         }
+        IServiceBus _bus;
         public int PosX { get; private set; }
         public int PosY { get; private set; }
         public int SizeX { get; }
         public int SizeY { get; }
         public int NumberOfMines { get; }
-        private IServiceBus _bus { get; }
+        private IServiceBus Bus { get; }
         public GameState State { get; private set; }
-        public bool isStarting = true;
 
         void PlaceMines(int numberOfMines, int sizeX, int sizeY, IServiceBus bus)
         {
@@ -98,59 +101,40 @@ namespace MineSweeperLogic
                 }
             }
 
-            PlaceMines(NumberOfMines, SizeX, SizeY, _bus);
+            PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
 
             
         }
 
         public void DrawBoard()
         {
-            isStarting = true;
-            while (isStarting)
+            for (int i = 0; i < SizeY; i++)
             {
-                for (int i = 0; i < SizeY; i++)
+                for (int k = 0; k < SizeX; k++)
                 {
-                    for (int k = 0; k < SizeX; k++)
-                    {
-                        if (i == PosY && k == PosX)
-                        {
-                            _bus.Write("? ", ConsoleColor.DarkCyan); 
-                        }
-                        else
-                        {
-                            _bus.Write("? ");
-                        }
-                        
-                    }
-                    _bus.WriteLine();
+                    _bus.Write("? ");
                 }
-                isStarting = false;
+                _bus.WriteLine();
             }
-            
-            
-
         }
 
         #region MoveCursor Methods
 
         public void MoveCursorUp()
         {
-            DrawBoard();
+
         }
 
         public void MoveCursorDown()
         {
-            DrawBoard();
         }
 
         public void MoveCursorLeft()
         {
-            DrawBoard();
         }
 
         public void MoveCursorRight()
         {
-            DrawBoard();
         }
 
         #endregion
