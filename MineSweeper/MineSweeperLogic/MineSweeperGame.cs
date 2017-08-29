@@ -17,8 +17,9 @@ namespace MineSweeperLogic
             NumberOfMines = nrOfMines;
             ResetBoard();
             gameBoard = new PositionInfo[sizeX, sizeY];
+            _bus = bus;
         }
-        
+        IServiceBus _bus;
         public int PosX { get; private set; }
         public int PosY { get; private set; }
         public int SizeX { get; }
@@ -55,6 +56,7 @@ namespace MineSweeperLogic
 
         public void ClickCoordinate()
         {
+
         }
 
         public void ResetBoard()
@@ -64,12 +66,21 @@ namespace MineSweeperLogic
 
         public void DrawBoard()
         {
+            for (int i = 0; i < SizeY; i++)
+            {
+                for (int k = 0; k < SizeX; k++)
+                {
+                    _bus.Write("? ");
+                }
+                _bus.WriteLine();
+            }
         }
 
         #region MoveCursor Methods
 
         public void MoveCursorUp()
         {
+
         }
 
         public void MoveCursorDown()
