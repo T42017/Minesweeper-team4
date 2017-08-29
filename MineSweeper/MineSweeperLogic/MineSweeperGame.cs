@@ -80,8 +80,13 @@ namespace MineSweeperLogic
         {
         }
 
+        private void FloodReveal(PositionInfo arrayToReveal, int sizeX, int sizeY)
+
         public void ClickCoordinate()
         {
+
+
+
         }
 
         public void ResetBoard()

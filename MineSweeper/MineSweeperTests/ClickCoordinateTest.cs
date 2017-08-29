@@ -10,19 +10,19 @@ namespace MineSweeperTests
     {
         private MineSweeperGame _underTest;
 
-		//[TestMethod]
-  //      public void ClickCoordinateShouldNotAlwaysResultInGameWin()
-  //      {
-  //          //Arrange
-  //          var bus = A.Fake<IServiceBus>();
-  //          A.CallTo(() => bus.Next(A<int>.Ignored)).ReturnsNextFromSequence(2, 2, 0, 2);
-  //          var game = new MineSweeperGame(5, 5, 2, bus);
+        [TestMethod]
+        public void ClickCoordinateShouldNotAlwaysResultInGameWin()
+        {
+            //Arrange
+            var bus = A.Fake<IServiceBus>();
+            A.CallTo(() => bus.Next(A<int>.Ignored)).ReturnsNextFromSequence(2, 2, 0, 2);
+            var game = new MineSweeperGame(5, 5, 2, bus);
 
-  //          //Act
-  //          game.ClickCoordinate();
-  //          //Assert
-  //          Assert.AreEqual(GameState.Playing, game.State);
-  //      }
+            //Act
+            game.ClickCoordinate();
+            //Assert
+            Assert.AreEqual(GameState.Playing, game.State);
+        }
 
         [TestMethod]
         public void ClickCoordinateShouldOpenNeighbourPositions()
