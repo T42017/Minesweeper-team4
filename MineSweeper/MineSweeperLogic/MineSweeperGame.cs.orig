@@ -10,46 +10,37 @@ namespace MineSweeperLogic
     public class MineSweeperGame
     {
         private PositionInfo[,] gameBoard;
+
         public MineSweeperGame(int sizeX, int sizeY, int nrOfMines, IServiceBus bus)
         {
             SizeX = sizeX;
             SizeY = sizeY;
             NumberOfMines = nrOfMines;
-            Bus = bus;
-            
-            gameBoard = new PositionInfo[sizeX, sizeY];
-<<<<<<< HEAD
             _bus = bus;
-=======
-            for (int i = 0; i < SizeY; i++)
-            {
-                for (int j = 0; j < SizeX; j++)
-                {
-                    gameBoard[i, j] = new PositionInfo(i, j, false);
-                }
-            }
-            PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
-
+            PosX = 0;
+            PosY = 0;
+            gameBoard = new PositionInfo[sizeX, sizeY];
             ResetBoard();
->>>>>>> Drawboard-2D_array
+            Console.SetCursorPosition(PosX,PosY);
+            
         }
-        IServiceBus _bus;
         public int PosX { get; private set; }
         public int PosY { get; private set; }
         public int SizeX { get; }
         public int SizeY { get; }
         public int NumberOfMines { get; }
-        private IServiceBus Bus { get; }
+        private IServiceBus _bus { get; }
         public GameState State { get; private set; }
+        public bool isStarting = true;
 
-        void PlaceMines(int numberOfMines, int sizeX, int sizeY, IServiceBus bus)
+        void PlaceMines(int numberOfMines, int sizeX, int sizeY)
         {
             int minesLeft = numberOfMines;
 
             while (minesLeft > 0)
             {
-                int indexX = bus.Next(sizeX);
-                int indexY = bus.Next(sizeY);
+                int indexX = _bus.Next(sizeX);
+                int indexY = _bus.Next(sizeY);
                 if (!gameBoard[indexX, indexY].HasMine)
                 {
                     gameBoard[indexX, indexY].HasMine = true;
@@ -82,17 +73,66 @@ namespace MineSweeperLogic
 
         public void FlagCoordinate()
         {
+            
+        }
+
+        public void FloodReveal(PositionInfo[,] arrayToBeFilled, int startPointX, int startPointY)
+        {
+            Stack<PositionInfo> points = new Stack<PositionInfo>();
+            points.Push(arrayToBeFilled[startPointX, startPointY]);
+
+
+            while (points.Count > 0)
+            {
+                PositionInfo a = points.Pop();
+
+                if (a.X < arrayToBeFilled.Length && a.X >= 0 && a.Y < arrayToBeFilled.Length && a.Y >= 0)
+                {
+<<<<<<< HEAD
+                    if (arrayToBeFilled[a.X, a.Y].NrOfNeighbours == 0 && arrayToBeFilled[a.X, a.Y].IsOpen == false)
+                    {
+                        arrayToBeFilled[a.X, a.Y].IsOpen = true;
+
+                        if(a.X > 0)
+                            points.Push(arrayToBeFilled[a.X - 1, a.Y]);
+                        if (a.Y > 0)
+                            points.Push(arrayToBeFilled[a.X, a.Y - 1]);
+                        if (a.X < SizeX-1)
+                            points.Push(arrayToBeFilled[a.X + 1, a.Y]);
+                        if(a.Y < SizeY-1)
+                            points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+                    }
+
+                    else
+                    {
+                        arrayToBeFilled[a.X, a.Y].IsOpen = true;
+=======
+                    if (!arrayToBeFilled[a.X, a.Y].IsOpen)
+                    {
+                        arrayToBeFilled[a.X, a.Y].IsOpen = true;
+                        if (a.X > 0)
+                            points.Push(arrayToBeFilled[a.X - 1, a.Y]);
+                        if (a.Y > 0)
+                            points.Push(arrayToBeFilled[a.X, a.Y - 1]);
+                        if (a.X < SizeX -1)
+                            points.Push(arrayToBeFilled[a.X + 1, a.Y]);
+                        if (a.Y < SizeY -1)
+                            points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+>>>>>>> 319a1e83edeeaead7ce515e13c9373073179c1e1
+                    }
+                }
+            }
         }
 
         public void ClickCoordinate()
         {
-
+            FloodReveal(gameBoard, PosX, PosY);
         }
 
         public void ResetBoard()
         {
 
-            State = GameState.Playing;
+            
             for (int i = 0; i < SizeX; i++)
             {
                 for (int j = 0; j < SizeY; j++)
@@ -101,20 +141,115 @@ namespace MineSweeperLogic
                 }
             }
 
-            PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
+            PlaceMines(NumberOfMines, SizeX, SizeY);
 
-            
+            for (int i = 0; i < SizeX; i++)
+            {
+                for (int j = 0; j < SizeY; j++)
+                {
+                    if (i <= 0 && j <= 0)
+                    {
+                        if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+
+                        if (i <= 0 && j > 0)
+                        {
+                            if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        }
+
+                        if (i > 0 && j <= 0)
+                        {
+                            if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        }
+                    }
+                    else if (i == SizeX && j == SizeY)
+                    {
+                        if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+
+                        if (i == SizeX && j < SizeY)
+                        {
+                            if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        }
+
+                        if (i < SizeX && j == SizeY)
+                        {
+                            if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                            if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+
+                        }
+                    }
+
+                    else if (i < SizeX-1 && i > 0 && j < SizeY-1 && j > 0)
+                    {
+                        if (gameBoard[i + 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i + 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j + 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i - 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                        if (gameBoard[i + 1, j - 1].HasMine) gameBoard[i, j].NrOfNeighbours++;
+                    }
+
+                }
+            }
+
         }
 
         public void DrawBoard()
         {
-            for (int i = 0; i < SizeY; i++)
+            isStarting = true;
+            while (isStarting)
             {
-                for (int k = 0; k < SizeX; k++)
+                for (int i = 0; i < SizeY; i++)
                 {
-                    _bus.Write("? ");
+                    for (int k = 0; k < SizeX; k++)
+                    {
+                        if (gameBoard[k, i].IsOpen)
+                        {
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("2 ", ConsoleColor.DarkCyan);
+                            }
+                            else
+                            {
+                                _bus.Write(". ");
+                            }
+                               
+                        }
+                        else if (gameBoard[k, i].IsFlagged)
+                        {
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("! ", ConsoleColor.DarkCyan);
+                            }
+                            else{
+                                _bus.Write("! ");
+                            }
+                        }
+                        
+                        else
+                        {
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("? ", ConsoleColor.DarkCyan);
+                            }
+                            else
+                            {
+                                _bus.Write("? ");
+                            }
+                        }
+                        
+                    }
+                    _bus.WriteLine();
                 }
-                _bus.WriteLine();
+                isStarting = false;
             }
         }
 
@@ -122,19 +257,43 @@ namespace MineSweeperLogic
 
         public void MoveCursorUp()
         {
-
+            if (PosY != 0)
+            {
+                PosY -= 1;
+                Console.SetCursorPosition(PosX, PosY);
+            }
+            DrawBoard();
         }
 
         public void MoveCursorDown()
         {
+            if (PosY != SizeY - 1)
+            {
+                PosY += 1;
+                Console.SetCursorPosition(PosX, PosY);
+            }
+            DrawBoard();
         }
 
         public void MoveCursorLeft()
         {
+            if (PosX != 0)
+            {
+                PosX -= 1;
+                Console.SetCursorPosition(PosX, PosY);
+            }
+            DrawBoard();
         }
 
         public void MoveCursorRight()
         {
+            if (PosX != SizeX - 1)
+            {
+                PosX += 1;
+                Console.SetCursorPosition(PosX, PosY);
+            }
+            
+            DrawBoard();
         }
 
         #endregion
