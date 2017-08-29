@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,6 +74,14 @@ namespace MineSweeperLogic
 
         public void FlagCoordinate()
         {
+            if (gameBoard[PosX, PosY].IsFlagged)
+            {
+                gameBoard[PosX, PosY].IsFlagged = false;
+            }
+            else if(gameBoard[PosX, PosY].IsFlagged == false && gameBoard[PosX, PosY].IsOpen == false)
+            {
+                gameBoard[PosX, PosY].IsFlagged = true;
+            }
             
         }
 
