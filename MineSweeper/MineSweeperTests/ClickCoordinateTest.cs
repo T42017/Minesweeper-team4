@@ -10,7 +10,7 @@ namespace MineSweeperTests
     {
         private MineSweeperGame _underTest;
 
-		[TestMethod]
+        [TestMethod]
         public void ClickCoordinateShouldNotAlwaysResultInGameWin()
         {
             //Arrange
