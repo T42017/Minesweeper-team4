@@ -15,6 +15,7 @@ namespace MineSweeperLogic
             SizeX = sizeX;
             SizeY = sizeY;
             NumberOfMines = nrOfMines;
+            Bus = bus;
             
             gameBoard = new PositionInfo[sizeX, sizeY];
             for (int i = 0; i < SizeY; i++)
@@ -24,6 +25,7 @@ namespace MineSweeperLogic
                     gameBoard[i, j] = new PositionInfo(i, j, false);
                 }
             }
+            PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
 
             ResetBoard();
         }
@@ -33,8 +35,24 @@ namespace MineSweeperLogic
         public int SizeX { get; }
         public int SizeY { get; }
         public int NumberOfMines { get; }
+        private IServiceBus Bus { get; }
         public GameState State { get; private set; }
-        
+
+        void PlaceMines(int numberOfMines, int sizeX, int sizeY, IServiceBus bus)
+        {
+            int minesLeft = numberOfMines;
+
+            while (minesLeft > 0)
+            {
+                int indexX = bus.Next(sizeX);
+                int indexY = bus.Next(sizeY);
+                if (!gameBoard[indexX, indexY].HasMine)
+                {
+                    gameBoard[indexX, indexY].HasMine = true;
+                    minesLeft--;
+                }
+            }
+        }
 
         public PositionInfo GetCoordinate(int x, int y)
         {
@@ -68,8 +86,8 @@ namespace MineSweeperLogic
 
         public void ResetBoard()
         {
-            
 
+            State = GameState.Playing;
             for (int i = 0; i < SizeX; i++)
             {
                 for (int j = 0; j < SizeY; j++)
@@ -78,7 +96,9 @@ namespace MineSweeperLogic
                 }
             }
 
-            State = GameState.Playing;
+            PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
+
+            
         }
 
         public void DrawBoard()
