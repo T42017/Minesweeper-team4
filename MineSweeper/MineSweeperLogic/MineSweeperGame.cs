@@ -330,9 +330,7 @@ namespace MineSweeperLogic
                         }
 
                         else
-                        {
-                            
-
+                        {                            
                             if (i == PosY && k == PosX)
                             {
                                 bgColour = ConsoleColor.DarkCyan;
