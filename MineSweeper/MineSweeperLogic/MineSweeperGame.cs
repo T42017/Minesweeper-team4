@@ -99,15 +99,55 @@ namespace MineSweeperLogic
                 {
                     if (arrayToBeFilled[a.X, a.Y].NrOfNeighbours == 0 && !arrayToBeFilled[a.X, a.Y].IsOpen && !arrayToBeFilled[a.X, a.Y].HasMine && !arrayToBeFilled[a.X, a.Y].IsFlagged)
                     {
-                        arrayToBeFilled[a.X, a.Y].IsOpen = true;                        
-                        if(a.X > 0)
+                        arrayToBeFilled[a.X, a.Y].IsOpen = true;
+
+
+
+                        if (a.X > 0)
+                        {
                             points.Push(arrayToBeFilled[a.X - 1, a.Y]);
-                        if (a.Y > 0)
-                            points.Push(arrayToBeFilled[a.X, a.Y - 1]);
-                        if (a.X < SizeX-1)
+                            
+                            if (a.Y > 0)
+                            {
+                                points.Push(arrayToBeFilled[a.X, a.Y - 1]);
+                                points.Push(arrayToBeFilled[a.X - 1, a.Y - 1]);
+                            }
+                            if (a.Y < SizeY - 1)
+                            {
+                                points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+                                points.Push(arrayToBeFilled[a.X - 1, a.Y + 1]);
+                            }
+                        }
+
+                        if (a.X < SizeX - 1)
+                        {
                             points.Push(arrayToBeFilled[a.X + 1, a.Y]);
-                        if(a.Y < SizeY-1)
-                            points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+
+                            if (a.Y > 0)
+                            {
+                                points.Push(arrayToBeFilled[a.X, a.Y - 1]);
+                                points.Push(arrayToBeFilled[a.X + 1, a.Y - 1]);
+                            }
+                            if (a.Y < SizeY - 1)
+                            {
+                                points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+                                points.Push(arrayToBeFilled[a.X + 1, a.Y + 1]);
+                            }
+                        }
+
+                        //if (a.Y > 0)
+                        //{
+                        //    points.Push(arrayToBeFilled[a.X, a.Y - 1]);
+
+                        //    if()
+                        //}
+
+                        //if (a.X < SizeX - 1)
+                        //    points.Push(arrayToBeFilled[a.X + 1, a.Y]);
+                        //if(a.Y < SizeY - 1)
+                        //    points.Push(arrayToBeFilled[a.X, a.Y + 1]);
+
+
                     }
 
                     else if(arrayToBeFilled[a.X, a.Y].IsOpen == false && !arrayToBeFilled[a.X, a.Y].HasMine && !arrayToBeFilled[a.X, a.Y].IsFlagged)
