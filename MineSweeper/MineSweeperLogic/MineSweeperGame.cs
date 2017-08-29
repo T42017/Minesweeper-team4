@@ -110,10 +110,11 @@ namespace MineSweeperLogic
                             points.Push(arrayToBeFilled[a.X, a.Y + 1]);
                     }
 
-                    else if(arrayToBeFilled[a.X, a.Y].IsOpen == false && !arrayToBeFilled[a.X, a.Y].HasMine)
+                    else if(!arrayToBeFilled[a.X, a.Y].IsOpen)
                     {
                         arrayToBeFilled[a.X, a.Y].IsOpen = true;
                     }
+                    
                 }
             }
         }
@@ -229,9 +230,9 @@ namespace MineSweeperLogic
                     for (int k = 0; k < SizeX; k++)
                     {
 
-                        if (gameBoard[k, i].IsOpen)
+                        if (gameBoard[k, i].IsOpen && !gameBoard[k, i].HasMine)
                         {
-                            if (i == PosY && k == PosX)
+                            if ((i == PosY && k == PosX) && gameBoard[k, i].NrOfNeighbours == 0)
                             {
                                 _bus.Write(". ", ConsoleColor.DarkCyan);
                             }
@@ -243,7 +244,7 @@ namespace MineSweeperLogic
                             {
                                 _bus.Write(". ");
                             }
-                               
+
                         }
                         else if (gameBoard[k, i].IsFlagged)
                         {
@@ -251,11 +252,21 @@ namespace MineSweeperLogic
                             {
                                 _bus.Write("! ", ConsoleColor.DarkCyan);
                             }
-                            else{
+                            else {
                                 _bus.Write("! ");
                             }
                         }
-                        
+                        else if (gameBoard[k, i].IsOpen && gameBoard[k, i].HasMine)
+                        {
+                            if (i == PosY && k == PosX)
+                            {
+                                _bus.Write("X ", ConsoleColor.DarkCyan);
+                            }
+                            else
+                            {
+                                _bus.Write("X ");
+                            }
+                        }
                         else
                         {
                             if (i == PosY && k == PosX)
