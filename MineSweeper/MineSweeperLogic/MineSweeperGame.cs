@@ -146,7 +146,7 @@ namespace MineSweeperLogic
                         {
                             if (i == PosY && k == PosX)
                             {
-                                _bus.Write("2 ", ConsoleColor.DarkCyan);
+                                _bus.Write(". ", ConsoleColor.DarkCyan);
                             }
                             else
                             {
