@@ -16,7 +16,8 @@ namespace MineSweeperLogic
             SizeY = sizeY;
             NumberOfMines = nrOfMines;
             Bus = bus;
-            
+            PosX = 0;
+            PosY = 0;
             gameBoard = new PositionInfo[sizeX, sizeY];
             for (int i = 0; i < SizeY; i++)
             {
@@ -27,6 +28,7 @@ namespace MineSweeperLogic
             }
             PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
 
+            Console.SetCursorPosition(PosX,PosY);
             ResetBoard();
         }
         
@@ -87,7 +89,7 @@ namespace MineSweeperLogic
         public void ResetBoard()
         {
 
-            State = GameState.Playing;
+            
             for (int i = 0; i < SizeX; i++)
             {
                 for (int j = 0; j < SizeY; j++)
@@ -96,9 +98,9 @@ namespace MineSweeperLogic
                 }
             }
 
-            PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
+            //PlaceMines(NumberOfMines, SizeX, SizeY, Bus);
+            State = GameState.Playing;
 
-            
         }
 
         public void DrawBoard()
@@ -109,18 +111,35 @@ namespace MineSweeperLogic
 
         public void MoveCursorUp()
         {
+            if (PosY != 0)
+            {
+                Console.SetCursorPosition(PosX, PosY - 1);
+            }
         }
 
         public void MoveCursorDown()
         {
+            if (PosY != SizeY - 1)
+            {
+                Console.SetCursorPosition(PosX, PosY + 1);
+            }
         }
 
         public void MoveCursorLeft()
         {
+            if (PosX != 0)
+            {
+                Console.SetCursorPosition(PosX - 1, PosY);
+            }
         }
 
         public void MoveCursorRight()
         {
+            if (PosX != SizeX - 1)
+            {
+                Console.SetCursorPosition(PosX + 1, PosY);
+            }
+            
         }
 
         #endregion
