@@ -120,7 +120,29 @@ namespace MineSweeperLogic
 
         public void ClickCoordinate()
         {
+            
             FloodReveal(gameBoard, PosX, PosY);
+            if (gameBoard[PosX, PosY].HasMine)
+            {
+                for (int i = 0; i < SizeX; i++)
+                {
+                    for (int j = 0; j < SizeY; j++)
+                    {
+                        if (gameBoard[i, j].HasMine) gameBoard[i, j].IsOpen = true;
+                    }
+                }
+                State = GameState.Lost;
+            }
+            int nrOfOpened = SizeX * SizeY;
+            for (int i = 0; i < SizeX; i++)
+            {
+                for (int j = 0; j < SizeY; j++)
+                { 
+                    if (gameBoard[i, j].IsOpen) nrOfOpened--;
+                    if (nrOfOpened <= NumberOfMines) State = GameState.Won;
+                }
+            }
+            
         }
 
         public void ResetBoard()
@@ -217,7 +239,8 @@ namespace MineSweeperLogic
                     }
                 }
             }
-    }
+            State = GameState.Playing;
+        }
 
         public void DrawBoard()
         {
