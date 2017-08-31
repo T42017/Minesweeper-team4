@@ -182,16 +182,19 @@ namespace MineSweeperLogic
                 }
                 State = GameState.Lost;
             }
-            int nrOfOpened = SizeX * SizeY;
-            for (int i = 0; i < SizeX; i++)
+            else
             {
-                for (int j = 0; j < SizeY; j++)
-                { 
-                    if (gameBoard[i, j].IsOpen) nrOfOpened--;
-                    if (nrOfOpened <= NumberOfMines) State = GameState.Won;
+                int nrOfOpened = SizeX * SizeY;
+                for (int i = 0; i < SizeX; i++)
+                {
+                    for (int j = 0; j < SizeY; j++)
+                    {
+                        if (gameBoard[i, j].IsOpen) nrOfOpened--;
+                        if (nrOfOpened <= NumberOfMines) State = GameState.Won;
+                    }
                 }
             }
-            
+
         }
 
         public void ResetBoard()
